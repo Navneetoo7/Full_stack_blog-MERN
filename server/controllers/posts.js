@@ -30,11 +30,13 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
-  const { title, message, selectedFile, creator, tags } = req.body;
+  const post = req.body;
+  console.log("postpostpostpost", post);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`No post with id: ${id}`);
   }
-  const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+  const updatedPost = { post, _id: id };
+  console.log("updatedPostupdatedPostupdatedPost", updatedPost);
   await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
   res.json(updatePost);
 };
@@ -58,11 +60,11 @@ export const likePost = async (req, res) => {
   }
   const post = await PostMessage.findById(id);
   //checking user alredy liked or not
+
   const index = post.likes.findIndex((id) => id === String(req.userId));
-  console.log("postlikesdata", post.likes);
   if (index === -1) {
     //like logic
-    pots.likes.push(req.userId);
+    post.likes.push(req.userId);
   } else {
     //dislike logic
     post.likes = post.likes.filter((id) => id !== String(req.userId));

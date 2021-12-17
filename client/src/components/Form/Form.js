@@ -24,10 +24,10 @@ const Form = ({ currentId, setCurrentId }) => {
     if (post) setPostData(post);
   }, [post]);
   console.log("postpostpostpost ", post);
-  useEffect(() => {}, [postI, dispatch]);
+  useEffect(() => {}, [postI, dispatch, post]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (currentId === 0) {
+    if (!currentId === 0) {
       console.log(postData, "hupdatePostupdatePostupdatePost-----");
       dispatch(
         updatePost(currentId, { ...postData, name: user?.result?.name })

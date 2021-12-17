@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import Post from "./Post/Post";
 import useStyles from "./styles";
-const Posts = ({ setCurrentId }) => {
+const Posts = ({ currentId, setCurrentId }) => {
   const posts = useSelector((state) => state.posts);
   const classes = useStyles();
   console.log(
@@ -40,7 +40,7 @@ const Posts = ({ setCurrentId }) => {
           alignItems="stretch"
           spacing={3}
         >
-          <Post post={post} setCurrentId={setCurrentId} />
+          <Post post={post} currentId={currentId} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>
