@@ -17,7 +17,7 @@ const Navbar = () => {
     const token = user?.token;
     //JWT...
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location, user]);
+  }, [location]);
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     history("/");
