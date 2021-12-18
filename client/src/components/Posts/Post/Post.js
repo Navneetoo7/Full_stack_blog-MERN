@@ -13,6 +13,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import { deletePost, likepost } from "../../../actions/posts";
 import { getPosts } from "../../../actions/posts";
@@ -21,7 +22,10 @@ const Post = ({ post, currentId, setCurrentId }) => {
   const classes = useStyles();
   const [postI, setPostI] = useState([]);
   const dispatch = useDispatch();
-  useEffect(() => {}, [postI, dispatch]);
+  const location = useLocation();
+  // useEffect(() => {
+  //   if (post) console.log("hi");
+  // }, [currentId, post, dispatch]);
   const like = async (id) => {
     await dispatch(likepost(id));
     await setPostI(dispatch(getPosts()));

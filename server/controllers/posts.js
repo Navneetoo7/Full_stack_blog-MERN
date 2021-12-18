@@ -1,9 +1,19 @@
 import mongoose from "mongoose";
 import express from "express";
 import PostMessage from "../models/postMessage.js";
+import e from "express";
 
 const router = express.Router();
 
+export const getPost = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const postMessages = await PostMessage.findById(id);
+    res.status(200).json(postMessages);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 export const getPosts = async (req, res) => {
   try {
     const postMessage = await PostMessage.find();
@@ -15,6 +25,8 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
+  console.log("createdAtcreatedAtcreatedAtcreatedAt backkkkkkkkkkkkkkkk");
+
   const newPost = new PostMessage({
     ...post,
     creator: req.userId,
@@ -27,16 +39,15 @@ export const createPost = async (req, res) => {
     res.status(409).json({ message: error });
   }
 };
-
+//update
 export const updatePost = async (req, res) => {
   const { id } = req.params;
-  const post = req.body;
-  console.log("postpostpostpost", post);
+  const { title, message, creator, selectedFile, tags } = req.body;
+  console.log("updateupdateupdateupdateupdate backkkkkkkkkkkkkkkk");
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`No post with id: ${id}`);
   }
-  const updatedPost = { post, _id: id };
-  console.log("updatedPostupdatedPostupdatedPost", updatedPost);
+  const updatedPost = { creator, title, tags, selectedFile, message, _id: id };
   await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
   res.json(updatePost);
 };

@@ -4,6 +4,8 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost, getPosts } from "../../actions/posts";
+import { useLocation } from "react-router-dom";
+
 //get the current post id for update
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
@@ -15,6 +17,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const [postI, setPostI] = useState([]);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation();
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const post = useSelector((state) =>
@@ -22,20 +25,19 @@ const Form = ({ currentId, setCurrentId }) => {
   );
   useEffect(() => {
     if (post) setPostData(post);
-  }, [post]);
+  }, [post, location]);
   console.log("postpostpostpost ", post);
-  useEffect(() => {}, [postI, dispatch, post]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!currentId === 0) {
-      console.log(postData, "hupdatePostupdatePostupdatePost-----");
+    if (currentId == "create") {
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      console.log("createPost createPost-----");
+      clear();
+    } else {
+      console.log("updatePostupdatePostupdatePost-----");
       dispatch(
         updatePost(currentId, { ...postData, name: user?.result?.name })
       );
-      clear();
-    } else {
-      console.log(postData, "hhjhjhjhjhjhjhj-----");
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
       clear();
     }
 
@@ -45,7 +47,7 @@ const Form = ({ currentId, setCurrentId }) => {
     setPostData({ ...postData, selectedFile: files.base64 });
   };
   const clear = () => {
-    setCurrentId(0);
+    setCurrentId("create");
     setPostData({
       title: "",
       message: "",

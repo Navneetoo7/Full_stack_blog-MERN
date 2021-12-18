@@ -10,11 +10,6 @@ const Posts = ({ currentId, setCurrentId }) => {
     "useSelector((state) => state.posts)",
     useSelector((state) => state)
   );
-  useEffect(() => {
-    // if (post) {
-    //   return true;
-    // }
-  }, [posts]);
 
   return !posts.length ? (
     posts.length === 0 ? (

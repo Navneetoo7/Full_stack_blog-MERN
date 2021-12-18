@@ -6,7 +6,7 @@ import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import { useDispatch } from "react-redux";
 const Home = () => {
-  const [currentId, setCurrentId] = useState(null);
+  const [currentId, setCurrentId] = useState("create");
   const dispatch = useDispatch();
   const classes = useStyles();
   useEffect(() => {
