@@ -25,6 +25,7 @@ const Form = ({ currentId, setCurrentId }) => {
   );
   useEffect(() => {
     if (post) setPostData(post);
+    console.log("daat worked form");
   }, [post, location]);
   console.log("postpostpostpost ", post);
   const handleSubmit = async (e) => {

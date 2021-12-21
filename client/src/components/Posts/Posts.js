@@ -4,15 +4,17 @@ import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import Post from "./Post/Post";
 import useStyles from "./styles";
 const Posts = ({ currentId, setCurrentId }) => {
-  const posts = useSelector((state) => state.posts);
+  let postsData = useSelector((state) => state.posts);
   const classes = useStyles();
   console.log(
     "useSelector((state) => state.posts)",
-    useSelector((state) => state)
+    // useSelector((state) => state),
+    postsData.length
   );
+  console.log("daat worked posts");
 
-  return !posts.length ? (
-    posts.length === 0 ? (
+  return !postsData.length ? (
+    postsData.length === 0 ? (
       <Typography variant="h5" color="secondary">
         No Post there Today For You Or Please Create One{" "}
       </Typography>
@@ -26,7 +28,7 @@ const Posts = ({ currentId, setCurrentId }) => {
       alignItems="stretch"
       spacing={3}
     >
-      {posts.map((post) => (
+      {postsData.map((post) => (
         <Grid
           key={post._id}
           item

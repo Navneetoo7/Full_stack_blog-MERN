@@ -2,21 +2,30 @@ import React from "react";
 import { Container } from "@material-ui/core";
 import useStyles from "./styles";
 import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
-import Chu from "./Chu";
+import PostDetails from "./components/PostDetails/PostDetails";
+// import Chu from "./Chu";
 
 const App = () => {
+  console.log("daat worked app");
+  const user = JSON.parse(localStorage.getItem("profile"));
   return (
     <BrowserRouter>
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Navbar />
         <div>
           <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/Auth" element={<Auth />} />
-            <Route path="/Chu" element={<Chu />} />
+            <Route exact path="/" element={<Navigate to="/posts" />} />
+            <Route exact path="/posts" element={<Home />} />
+            <Route exact path="/posts/search" element={<Home />} />
+            <Route exat path="/posts/:id" element={<PostDetails />} />
+            <Route
+              path="/auth"
+              element={!user ? <Auth /> : <Navigate to="/posts" />}
+            />
+            {/* <Route path="/Chu" element={<Chu />} /> */}
           </Routes>
         </div>
       </Container>

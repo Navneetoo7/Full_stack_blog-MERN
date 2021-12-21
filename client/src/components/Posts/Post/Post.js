@@ -23,9 +23,11 @@ const Post = ({ post, currentId, setCurrentId }) => {
   const [postI, setPostI] = useState([]);
   const dispatch = useDispatch();
   const location = useLocation();
-  // useEffect(() => {
-  //   if (post) console.log("hi");
-  // }, [currentId, post, dispatch]);
+  useEffect(() => {
+    console.log("hi", currentId);
+  }, [currentId]);
+  console.log("daat worked Post", post);
+
   const like = async (id) => {
     await dispatch(likepost(id));
     await setPostI(dispatch(getPosts()));
