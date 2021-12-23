@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getPosts } from "../../actions/posts";
+import { getPosts, getPostsBySearch } from "../../actions/posts";
 import useStyles from "./styles";
 import {
   Container,
@@ -27,11 +27,36 @@ const Home = () => {
   const classes = useStyles();
   const query = useQuery();
   const history = useNavigate();
-  const page = query.get("page");
+  const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
+  const [search, setSearch] = useState("");
+  const [tags, setTags] = useState([]);
+  //on search hitting enter
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      //search post
+      searchPost();
+    }
+  };
+  //add and remove tag of search
+  const handleAdd = (tag) => setTags([...tags, tag]);
+  const handleDelete = (tagToDelete) =>
+    setTags(tags.filter((tag) => tag !== tagToDelete));
+  //search action
+  const searchPost = () => {
+    if (search.trim || tags) {
+      //search post
+      dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+      history(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
+      );
+    } else {
+      history("/");
+    }
+  };
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [currentId, dispatch]);
   return (
     <Grow in>
       <Container maxWidth="xl">
@@ -47,7 +72,7 @@ const Home = () => {
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <AppBar
-              className={classes.AppBarSearch}
+              className={classes.appBarSearch}
               position="static"
               color="inherit"
             >
@@ -56,13 +81,32 @@ const Home = () => {
                 variant="outlined"
                 label="Search Memories"
                 fullWidth
-                value="TEST"
-                onChange={() => {}}
+                onKeyPress={handleKeyPress}
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
+              <ChipInput
+                style={{ margin: "10px 0" }}
+                value={tags}
+                onAdd={handleAdd}
+                onDelete={handleDelete}
+                label="Search Tags"
+                variant="outlined"
+              />
+              <Button
+                onClick={searchPost}
+                className={classes.searchButton}
+                color="primary"
+                variant="contained"
+              >
+                Search
+              </Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={6}>
-              <Pagination />
+              <Pagination page={page} />
             </Paper>
           </Grid>
         </Grid>

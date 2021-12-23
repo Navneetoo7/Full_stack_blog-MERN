@@ -11,7 +11,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    tags: "",
+    tags: [],
     selectedFile: "",
   });
   const [postI, setPostI] = useState([]);
@@ -21,7 +21,9 @@ const Form = ({ currentId, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const post = useSelector((state) =>
-    currentId ? state.posts.find((message) => message._id === currentId) : null
+    currentId
+      ? state.posts?.posts?.find((message) => message._id === currentId)
+      : null
   );
   useEffect(() => {
     if (post) setPostData(post);
@@ -41,8 +43,6 @@ const Form = ({ currentId, setCurrentId }) => {
       );
       clear();
     }
-
-    await setPostI(dispatch(getPosts()));
   };
   const getFiles = (files) => {
     setPostData({ ...postData, selectedFile: files.base64 });

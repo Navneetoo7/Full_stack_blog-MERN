@@ -28,9 +28,9 @@ const Post = ({ post, currentId, setCurrentId }) => {
   }, [currentId]);
   console.log("daat worked Post", post);
 
-  const like = async (id) => {
-    await dispatch(likepost(id));
-    await setPostI(dispatch(getPosts()));
+  const like = (id) => {
+    dispatch(likepost(id));
+    setPostI(dispatch(getPosts()));
   };
   const user = JSON.parse(localStorage.getItem("profile"));
   console.log("currentIdcurrentIdcurrentId", currentId);
@@ -64,7 +64,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia
         className={classes.media}
         image={post.selectedFile}
