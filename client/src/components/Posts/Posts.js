@@ -6,17 +6,11 @@ import useStyles from "./styles";
 const Posts = ({ currentId, setCurrentId }) => {
   //[]-> {posts:[]}now
   // let postsData = useSelector((state) => state.posts);
-  const { posts } = useSelector((state) => state.posts);
+  const { posts, isLoading } = useSelector((state) => state.posts);
   const classes = useStyles();
   console.log("daat worked posts", posts);
-
-  return !posts ? (
-    // (
-    //   postsData.length === 0 ? (
-    //     <Typography variant="h5" color="secondary">
-    //       No Post there Today For You Or Please Create One{" "}
-    //     </Typography>
-    //   ) :
+  if (!posts.length && !isLoading) return "No post";
+  return isLoading ? (
     <CircularProgress />
   ) : (
     <Grid

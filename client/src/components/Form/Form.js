@@ -29,7 +29,9 @@ const Form = ({ currentId, setCurrentId }) => {
     if (post) setPostData(post);
     console.log("daat worked form");
   }, [post, location]);
+
   console.log("postpostpostpost ", post);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId == "create") {
@@ -44,9 +46,11 @@ const Form = ({ currentId, setCurrentId }) => {
       clear();
     }
   };
+
   const getFiles = (files) => {
     setPostData({ ...postData, selectedFile: files.base64 });
   };
+
   const clear = () => {
     setCurrentId("create");
     setPostData({
@@ -66,7 +70,7 @@ const Form = ({ currentId, setCurrentId }) => {
     );
   }
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={6}>
       <form
         autoComplete="off"
         noValidate
