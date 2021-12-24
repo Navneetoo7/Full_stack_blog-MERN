@@ -63,8 +63,10 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 export const likepost = (id) => async (dispatch) => {
+  const user = JSON.parse(localStorage.getItem("profile"));
+
   try {
-    const { data } = await api.likePost(id);
+    const { data } = await api.likePost(id, user?.token);
     dispatch({ type: LIKE, payload: data });
   } catch (error) {
     console.log(error);
@@ -76,10 +78,9 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     const {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
-    dispatch({ type: FETCH_BY_SEARCH, payload: data });
+    dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
-    dispatch({ type: END_LOADING });
   }
 };

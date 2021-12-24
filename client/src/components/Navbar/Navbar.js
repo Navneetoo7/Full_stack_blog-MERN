@@ -12,10 +12,8 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log("token", user);
   const history = useNavigate();
   const location = useLocation();
-  console.log("locationlocationlocation", location);
   useEffect(() => {
     const token = user?.token;
     //JWT...

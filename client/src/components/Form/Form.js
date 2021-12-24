@@ -3,7 +3,7 @@ import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, updatePost, getPosts } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/posts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //get the current post id for update
@@ -28,19 +28,14 @@ const Form = ({ currentId, setCurrentId }) => {
   );
   useEffect(() => {
     if (post) setPostData(post);
-    console.log("daat worked form");
-  }, [post, location]);
-
-  console.log("postpostpostpost ", post);
+  }, [post]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId == "create") {
       dispatch(createPost({ ...postData, name: user?.result?.name }, history));
-      console.log("createPost createPost-----");
       clear();
     } else {
-      console.log("updatePostupdatePostupdatePost-----");
       dispatch(
         updatePost(currentId, { ...postData, name: user?.result?.name })
       );
@@ -128,7 +123,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <div className={classes.fileInput}>
           <FileBase type="file" multiple={false} onDone={getFiles.bind(this)} />
         </div>
-        {console.log(postData)}
         <Button
           className={classes.buttonSubmit}
           color="primary"

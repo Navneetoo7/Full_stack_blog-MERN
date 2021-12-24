@@ -25,21 +25,16 @@ const Post = ({ post, currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const location = useLocation();
-  useEffect(() => {
-    console.log("hi", currentId);
-  }, [currentId]);
-  console.log("daat worked Post", post);
 
   const openPost = () => {
     history(`/posts/${post._id}`);
   };
 
-  const like = (id) => {
-    dispatch(likepost(id));
-    setPostI(dispatch(getPosts()));
-  };
+  // const like = (id) => {
+  //   dispatch(likepost(id));
+  //   setPostI(dispatch(getPosts()));
+  // };
   const user = JSON.parse(localStorage.getItem("profile"));
-  console.log("currentIdcurrentIdcurrentId", currentId);
 
   const Likes = () => {
     if (post.likes.length > 0) {
@@ -127,10 +122,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
           size="small"
           color="primary"
           disabled={!user?.result}
-          onClick={
-            () => like(post._id)
-            // dispatch(likepost(post._id))
-          }
+          onClick={() => dispatch(likepost(post._id))}
         >
           {/* <ThumbUpAltIcon fontSize="small" />
           Like {post.likes} */}

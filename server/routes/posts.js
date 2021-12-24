@@ -10,9 +10,9 @@ import {
   getPost,
   getPostsBySearch,
 } from "../controllers/posts.js";
+router.get("/search", getPostsBySearch);
 router.get("/", getPosts);
 router.get("/:id", getPost);
-router.get("/search", getPostsBySearch);
 router.post("/", auth, createPost);
 router.patch("/:id", auth, updatePost);
 router.delete("/:id", auth, deletePost);

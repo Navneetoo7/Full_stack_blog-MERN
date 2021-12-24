@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 import useStyles from "./styles";
 import {
   Container,
-  Typography,
   Grid,
   Grow,
   Paper,

@@ -29,7 +29,6 @@ const PostDetails = () => {
     }
   }, [post]);
   // const recommendedPosts = posts.posts.filter(({_id})=> _id!==post._id);
-  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
   //recommed data
   const openPost = (_id) => history(`/posts/${_id}`);
   if (!post) return null;
@@ -40,6 +39,8 @@ const PostDetails = () => {
       </Paper>
     );
   }
+    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
+
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>

@@ -9,7 +9,6 @@ import PostDetails from "./components/PostDetails/PostDetails";
 // import Chu from "./Chu";
 
 const App = () => {
-  console.log("daat worked app");
   const user = JSON.parse(localStorage.getItem("profile"));
   return (
     <BrowserRouter>
