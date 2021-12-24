@@ -21,7 +21,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 const Home = () => {
-  const [currentId, setCurrentId] = useState("create");
+  const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
   const classes = useStyles();
   const query = useQuery();
@@ -67,7 +67,7 @@ const Home = () => {
           className={classes.gridContainer}
         >
           <Grid item xs={12} sm={6} md={9}>
-            <Posts currentId={currentId} setCurrentId={setCurrentId} />
+            <Posts setCurrentId={setCurrentId} />
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <AppBar

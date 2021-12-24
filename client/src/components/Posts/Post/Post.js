@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useStyles from "./styles";
 import {
   Card,
@@ -19,7 +19,7 @@ import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import { deletePost, likepost } from "../../../actions/posts";
 import { getPosts } from "../../../actions/posts";
 
-const Post = ({ post, currentId, setCurrentId }) => {
+const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const [postI, setPostI] = useState([]);
   const dispatch = useDispatch();
@@ -90,7 +90,8 @@ const Post = ({ post, currentId, setCurrentId }) => {
           <Button
             style={{ color: "white" }}
             size="small"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setCurrentId(post._id);
             }}
           >

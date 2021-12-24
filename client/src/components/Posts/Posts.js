@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import Post from "./Post/Post";
 import useStyles from "./styles";
-const Posts = ({ currentId, setCurrentId }) => {
+const Posts = ({ setCurrentId }) => {
   //[]-> {posts:[]}now
   // let postsData = useSelector((state) => state.posts);
   const { posts, isLoading } = useSelector((state) => state.posts);
@@ -20,7 +20,7 @@ const Posts = ({ currentId, setCurrentId }) => {
     >
       {posts.map((post) => (
         <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
-          <Post post={post} currentId={currentId} setCurrentId={setCurrentId} />
+          <Post post={post} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>

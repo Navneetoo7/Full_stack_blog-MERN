@@ -27,12 +27,13 @@ const Form = ({ currentId, setCurrentId }) => {
       : null
   );
   useEffect(() => {
+    // if (!post?.title) clear();
     if (post) setPostData(post);
   }, [post]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (currentId == "create") {
+    if (currentId === 0) {
       dispatch(createPost({ ...postData, name: user?.result?.name }, history));
       clear();
     } else {
@@ -48,7 +49,7 @@ const Form = ({ currentId, setCurrentId }) => {
   };
 
   const clear = () => {
-    setCurrentId("create");
+    setCurrentId(0);
     setPostData({
       title: "",
       message: "",
@@ -74,19 +75,8 @@ const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">
-          {currentId == "create" ? "Creating" : "Editing"} a Memory
+          {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
         </Typography>
-        {/* <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          className={classes.fields}
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        /> */}
         <TextField
           name="title"
           variant="outlined"
