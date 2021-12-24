@@ -7,13 +7,14 @@ import {
   CardMedia,
   Button,
   Typography,
+  ButtonBase,
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import { deletePost, likepost } from "../../../actions/posts";
 import { getPosts } from "../../../actions/posts";
@@ -22,11 +23,16 @@ const Post = ({ post, currentId, setCurrentId }) => {
   const classes = useStyles();
   const [postI, setPostI] = useState([]);
   const dispatch = useDispatch();
+  const history = useNavigate();
   const location = useLocation();
   useEffect(() => {
     console.log("hi", currentId);
   }, [currentId]);
   console.log("daat worked Post", post);
+
+  const openPost = () => {
+    history(`/posts/${post._id}`);
+  };
 
   const like = (id) => {
     dispatch(likepost(id));
@@ -65,10 +71,17 @@ const Post = ({ post, currentId, setCurrentId }) => {
 
   return (
     <Card className={classes.card} raised elevation={6}>
+      {/* <ButtonBase
+        component="span"
+        name="test"
+        className={classes.cardActions}
+        onClick={openPost}
+      > */}
       <CardMedia
         className={classes.media}
         image={post.selectedFile}
         title={post.title}
+        onClick={openPost}
       />
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
@@ -108,6 +121,7 @@ const Post = ({ post, currentId, setCurrentId }) => {
           {post.message}
         </Typography>
       </CardContent>
+      {/* </ButtonBase> */}
       <CardActions className={classes.cardActions}>
         <Button
           size="small"

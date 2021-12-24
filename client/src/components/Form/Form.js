@@ -4,7 +4,7 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost, getPosts } from "../../actions/posts";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 //get the current post id for update
 const Form = ({ currentId, setCurrentId }) => {
@@ -19,6 +19,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem("profile"));
+  const history = useNavigate();
 
   const post = useSelector((state) =>
     currentId
@@ -35,7 +36,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (currentId == "create") {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost({ ...postData, name: user?.result?.name }, history));
       console.log("createPost createPost-----");
       clear();
     } else {
