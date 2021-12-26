@@ -17,41 +17,48 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import { deletePost, likepost } from "../../../actions/posts";
-import { getPosts } from "../../../actions/posts";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const [postI, setPostI] = useState([]);
+  const [likes, setLikes] = useState(post?.likes);
   const dispatch = useDispatch();
   const history = useNavigate();
   const location = useLocation();
-
+  const user = JSON.parse(localStorage.getItem("profile"));
   const openPost = () => {
     history(`/posts/${post._id}`);
+  };
+  const userId = user?.result?.googleId || user?.result?._id;
+  const toKnowIfLike = post.likes.find((like) => like === userId);
+  const handleLikes = async () => {
+    await dispatch(likepost(post._id));
+    if (toKnowIfLike) {
+      setLikes(post.likes.filter((id) => id !== userId));
+    } else {
+      setLikes([...post.likes, userId]);
+    }
   };
 
   // const like = (id) => {
   //   dispatch(likepost(id));
   //   setPostI(dispatch(getPosts()));
   // };
-  const user = JSON.parse(localStorage.getItem("profile"));
 
   const Likes = () => {
-    if (post.likes.length > 0) {
-      return post.likes.find(
-        (like) => like === (user?.result?.googleId || user?.result?._id)
-      ) ? (
+    if (likes.length > 0) {
+      return likes.find((like) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
-          {post.likes.length > 2
-            ? `You and ${post.likes.length - 1} others`
-            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          {likes.length > 2
+            ? `You and ${likes.length - 1} others`
+            : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
         </>
       );
     }
@@ -123,10 +130,10 @@ const Post = ({ post, setCurrentId }) => {
           size="small"
           color="primary"
           disabled={!user?.result}
-          onClick={() => dispatch(likepost(post._id))}
+          onClick={handleLikes}
         >
           {/* <ThumbUpAltIcon fontSize="small" />
-          Like {post.likes} */}
+          Like {likes} */}
           <Likes />
         </Button>
         {(user?.result?.googleId === post?.creator ||

@@ -30,3 +30,5 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const signIn = (FormData) => API.post("/user/signIn", FormData);
 export const signUp = (FormData) => API.post("/user/signUp", FormData);
+export const comment = (value, id) =>
+  API.post(`/posts/${id}/commentPost`, { value });

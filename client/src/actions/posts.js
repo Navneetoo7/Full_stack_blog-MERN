@@ -8,6 +8,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
+  COMMENT,
 } from "../constants/actionTypes";
 import * as api from "../api";
 //action creators
@@ -25,8 +26,13 @@ export const getPost = (id) => async (dispatch) => {
 export const getPosts = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data } = await api.fetchPosts(page);
-    dispatch({ type: FETCH_ALL, payload: data });
+    const {
+      data: { data, currentPage, numberOfPages },
+    } = await api.fetchPosts(page);
+    dispatch({
+      type: FETCH_ALL,
+      payload: { data, currentPage, numberOfPages },
+    });
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error.message);
@@ -80,6 +86,18 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     } = await api.fetchPostsBySearch(searchQuery);
     dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
     dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const commentPost = (value, id) => async (dispatch) => {
+  try {
+    const { data } = await api.comment(value, id);
+
+    dispatch({ type: COMMENT, payload: data });
+
+    return data.comments;
   } catch (error) {
     console.log(error);
   }

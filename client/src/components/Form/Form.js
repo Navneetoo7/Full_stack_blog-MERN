@@ -23,13 +23,13 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const post = useSelector((state) =>
     currentId
-      ? state.posts?.posts?.find((message) => message._id === currentId)
+      ? state.posts.posts.find((message) => message._id === currentId)
       : null
   );
   useEffect(() => {
     // if (!post?.title) clear();
     if (post) setPostData(post);
-  }, [post]);
+  }, [post, currentId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +72,7 @@ const Form = ({ currentId, setCurrentId }) => {
         autoComplete="off"
         noValidate
         className={`${classes.root}${classes.form}`}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       >
         <Typography variant="h6">
           {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
@@ -120,6 +120,7 @@ const Form = ({ currentId, setCurrentId }) => {
           size="large"
           type="submit"
           fullWidth
+          onClick={handleSubmit}
         >
           Submit
         </Button>
