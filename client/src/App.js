@@ -1,15 +1,15 @@
-import React from "react";
-import { Container } from "@material-ui/core";
-import useStyles from "./styles";
-import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Auth from "./components/Auth/Auth";
-import PostDetails from "./components/PostDetails/PostDetails";
+import React from 'react';
+import { Container } from '@material-ui/core';
+// import useStyles from "./styles";
+import Navbar from './components/Navbar/Navbar';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './components/Home/Home';
+import Auth from './components/Auth/Auth';
+import PostDetails from './components/PostDetails/PostDetails';
 // import Chu from "./Chu";
 
 const App = () => {
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const user = JSON.parse(localStorage.getItem('profile'));
   return (
     <BrowserRouter>
       <Container maxWidth="xl">
@@ -24,7 +24,6 @@ const App = () => {
               path="/auth"
               element={!user ? <Auth /> : <Navigate to="/posts" />}
             />
-            {/* <Route path="/Chu" element={<Chu />} /> */}
           </Routes>
         </div>
       </Container>

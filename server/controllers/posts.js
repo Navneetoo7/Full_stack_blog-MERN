@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import express from "express";
-import PostMessage from "../models/postMessage.js";
-import e from "express";
-//QUERY -> /posts?page=1 ->  page=10
+import mongoose from 'mongoose';
+import express from 'express';
+import PostMessage from '../models/postMessage.js';
+import e from 'express';
+//QUERY -> /posts?page=1 ->  page=1
 //PARAMS -> /posts/:id  -> id=123 -> /posts/123
 const router = express.Router();
 
@@ -39,7 +39,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  console.log("createdAtcreatedAtcreatedAtcreatedAt backkkkkkkkkkkkkkkk");
+  console.log('createdAtcreatedAtcreatedAtcreatedAt backkkkkkkkkkkkkkkk');
   const newPost = new PostMessage({
     ...post,
     creator: req.userId,
@@ -56,7 +56,7 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
   const { id } = req.params;
   const { title, message, creator, selectedFile, tags } = req.body;
-  console.log("updateupdateupdateupdateupdate backkkkkkkkkkkkkkkk");
+  console.log('updateupdateupdateupdateupdate backkkkkkkkkkkkkkkk');
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`No post with id: ${id}`);
   }
@@ -71,13 +71,13 @@ export const deletePost = async (req, res) => {
     return res.status(404).send(`No post with id ${id}`);
   }
   await PostMessage.findByIdAndRemove(id);
-  res.json({ message: "Post delete successfully" });
+  res.json({ message: 'Post delete successfully' });
 };
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
   //from auth to verify user authenticated or no and if not then it work(auth return)
-  if (!req.userId) return res.json({ message: "Unathenticated" });
+  if (!req.userId) return res.json({ message: 'Unathenticated' });
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send(`No post with id ${id}`);
@@ -93,12 +93,6 @@ export const likePost = async (req, res) => {
     //dislike logic
     post.likes = post.likes.filter((id) => id !== String(req.userId));
   }
-  // like last logic
-  // const updatedPost = await PostMessage.findByIdAndUpdate(
-  //   id,
-  //   { likeCount: post.likeCount + 1 },
-  //   { new: true }
-  // );
   const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
     new: true,
   });
@@ -111,9 +105,9 @@ export const likePost = async (req, res) => {
 export const getPostsBySearch = async (req, res) => {
   const { searchQuery, tags } = req.query;
   try {
-    const title = new RegExp(searchQuery, "i");
+    const title = new RegExp(searchQuery, 'i');
     const posts = await PostMessage.find({
-      $or: [{ title }, { tags: { $in: tags.split(",") } }],
+      $or: [{ title }, { tags: { $in: tags.split(',') } }],
     });
     res.json({ data: posts });
   } catch (error) {

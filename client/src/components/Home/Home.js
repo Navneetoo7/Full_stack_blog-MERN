@@ -53,9 +53,6 @@ const Home = () => {
       history("/");
     }
   };
-  // useEffect(() => {
-  //   dispatch(getPosts());
-  // }, [currentId, dispatch]);
   return (
     <Grow in>
       <Container maxWidth="xl">

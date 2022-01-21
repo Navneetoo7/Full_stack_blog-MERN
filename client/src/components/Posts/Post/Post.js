@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import useStyles from "./styles";
+import React, { useState } from 'react';
+import useStyles from './styles';
 import {
   Card,
   CardActions,
@@ -8,43 +8,36 @@ import {
   Button,
   Typography,
   ButtonBase,
-} from "@material-ui/core";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import DeleteIcon from "@material-ui/icons/Delete";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import moment from "moment";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
-import { deletePost, likepost } from "../../../actions/posts";
+} from '@material-ui/core';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import DeleteIcon from '@material-ui/icons/Delete';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
+import { deletePost, likepost } from '../../../actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
-  const [postI, setPostI] = useState([]);
   const [likes, setLikes] = useState(post?.likes);
   const dispatch = useDispatch();
   const history = useNavigate();
-  const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("profile"));
+  // const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('profile'));
   const openPost = () => {
     history(`/posts/${post._id}`);
   };
   const userId = user?.result?.googleId || user?.result?._id;
   const toKnowIfLike = post.likes.find((like) => like === userId);
   const handleLikes = async () => {
-    await dispatch(likepost(post._id));
+    dispatch(likepost(post._id));
     if (toKnowIfLike) {
       setLikes(post.likes.filter((id) => id !== userId));
     } else {
       setLikes([...post.likes, userId]);
     }
   };
-
-  // const like = (id) => {
-  //   dispatch(likepost(id));
-  //   setPostI(dispatch(getPosts()));
-  // };
-
   const Likes = () => {
     if (likes.length > 0) {
       return likes.find((like) => like === userId) ? (
@@ -53,12 +46,12 @@ const Post = ({ post, setCurrentId }) => {
           &nbsp;
           {likes.length > 2
             ? `You and ${likes.length - 1} others`
-            : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
+            : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
@@ -95,7 +88,7 @@ const Post = ({ post, setCurrentId }) => {
         user?.result?._id === post?.creator) && (
         <div className={classes.overlay2}>
           <Button
-            style={{ color: "white" }}
+            style={{ color: 'white' }}
             size="small"
             onClick={(e) => {
               e.stopPropagation();
@@ -121,7 +114,7 @@ const Post = ({ post, setCurrentId }) => {
       </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary" gutterBottom>
-          {post.message}
+          {post.message.split(' ').splice(0, 20).join(' ')}...
         </Typography>
       </CardContent>
       {/* </ButtonBase> */}

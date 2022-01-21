@@ -72,7 +72,7 @@ const Form = ({ currentId, setCurrentId }) => {
         autoComplete="off"
         noValidate
         className={`${classes.root}${classes.form}`}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <Typography variant="h6">
           {currentId ? `Editing "${post?.title}"` : "Creating a Memory"}
@@ -120,7 +120,6 @@ const Form = ({ currentId, setCurrentId }) => {
           size="large"
           type="submit"
           fullWidth
-          onClick={handleSubmit}
         >
           Submit
         </Button>
